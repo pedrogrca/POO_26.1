@@ -1,4 +1,4 @@
-# Q1
+# Qgit 1
 
 soma_par = 0
 soma_impar = 0
