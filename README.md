@@ -31,8 +31,4 @@ Se quiser testar os códigos desenvolvidos aqui, siga este passo a passo:
 
 1. Clone este repositório para a sua máquina local:
    ```bash
-<<<<<<< HEAD
    git clone [https://github.com/pedrogrca/NOME_DO_SEU_REPOSITORIO.git](https://github.com/pedrogrca/NOME_DO_SEU_REPOSITORIO.git)
-=======
-   git clone [https://github.com/pedrogrca/NOME_DO_SEU_REPOSITORIO.git](https://github.com/pedrogrca/NOME_DO_SEU_REPOSITORIO.git)
->>>>>>> 06055b3afabff9eb791b2f9b74ceb40e6b09dbef
