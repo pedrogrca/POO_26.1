@@ -2,21 +2,27 @@ import math
 
 class Circulo:
     def __init__(self):
-        self.raio = 0.0
+        self.__raio = 0.0
     def set_raio(self,v):
-        self.raio = v
+        if v <= 0:
+            return "O valor do raio precisa ser maior que 0"
+        else:
+            self.__raio = v
     def get_raio(self):
-        return self.raio
+        return self.__raio
     def calc_area(self):
-        return self.raio * math.pi ** 2
+        return  math.pi * (self.__raio  ** 2)
     def calc_circunferencia(self):
-        return self.raio * math.pi * 2
+        return self.__raio * math.pi * 2
     
 x = Circulo()
 
-x.set_raio(5)
-valor_raio = x.raio
+valor_digitado = int(input("Digite o valor do raio: "))
 
-print(valor_raio)
-print(x.calc_area())
-print(x.calc_circunferencia())
+mensagem = x.set_raio(valor_digitado)
+
+if mensagem: 
+    print(mensagem)
+else:
+    print("Área:", x.calc_area())
+    print("Circunferência:", x.calc_circunferencia())
