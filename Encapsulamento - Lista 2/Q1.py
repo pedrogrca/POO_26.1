@@ -17,12 +17,12 @@ class Circulo:
     
 x = Circulo()
 
-valor_digitado = int(input("Digite o valor do raio: "))
+v = int(input("Digite o valor do raio: "))
 
-mensagem = x.set_raio(valor_digitado)
+m = x.set_raio(v)
 
-if mensagem: 
-    print(mensagem)
+if m:
+    print(m)
 else:
     print("Área:", x.calc_area())
     print("Circunferência:", x.calc_circunferencia())
