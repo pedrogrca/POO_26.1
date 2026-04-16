@@ -1,7 +1,7 @@
 class Frete():
-    def __init__(self,p = 0.0,d = 0.0):
-        self.__peso = p
-        self.__distancia = d
+    def __init__(self,p,d):
+        self.setDistancia(d)
+        self.setPeso(p)
     def setDistancia(self,d):
         if d > 1:
             self.__distancia = d
@@ -20,9 +20,6 @@ class Frete():
         return f"O frete para seu pedido de {self.getPeso()}kg para a distância de {self.getDistancia()}km custará um total de R${self.calcFrete()}"
     
 
-x = Frete()
-
-x.setPeso(100)
-x.setDistancia(50)
+x = Frete(500, 250)
 
 print(x.toString())
