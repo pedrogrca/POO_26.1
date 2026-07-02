@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(pip install *)",
+      "Bash(python -m pip install pypdf --quiet)",
+      "Bash(java -version)",
+      "Bash(npx --version)",
+      "Bash(curl -sL -o plantuml.jar --max-time 30 \"https://github.com/plantuml/plantuml/releases/download/v1.2024.7/plantuml-1.2024.7.jar\")",
+      "Bash(mkdir -p img)",
+      "Bash(java -jar __TRACKED_VAR__/plantuml.jar -charset UTF-8 -tpng -o img 02_diagrama_casos_de_uso.puml 03_diagrama_classes_modelo.puml 04_diagrama_classes_persistencia.puml)",
+      "Bash(echo \"---exit $?---\")",
+      "Bash(python -m unittest tests.test_persistencia -v)",
+      "Bash(python exemplo_persistencia.py)",
+      "Bash(python -c \"import reportlab; print\\('reportlab', reportlab.Version\\)\")",
+      "Bash(python -c \"import PIL; print\\('Pillow', PIL.__version__\\)\")",
+      "Bash(python -m pip install reportlab --quiet)",
+      "Read(//c/Windows/Fonts/**)",
+      "Bash(python \"C:/Users/Pedro/AppData/Local/Temp/claude/C--DEV-ProjetoPOO/56c895f4-b898-4d5d-8259-e0042250f75f/scratchpad/build_pdf.py\")",
+      "Bash(java -jar __TRACKED_VAR__/plantuml.jar -charset UTF-8 -tpng -o img 04_diagrama_classes_persistencia.puml)",
+      "Bash(echo \"exit $?\")",
+      "Bash(python -c \"from PIL import Image; print\\('nova dimensao:', Image.open\\('img/diagrama_classes_persistencia.png'\\).size\\)\")"
+    ]
+  }
+}

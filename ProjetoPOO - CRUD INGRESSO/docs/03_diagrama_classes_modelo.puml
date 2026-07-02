@@ -1,0 +1,127 @@
+@startuml diagrama_classes_modelo
+' Diagrama de Classes do MODELO - GestEventos
+' Renderize em https://www.plantuml.com/plantuml ou na extensao PlantUML do VS Code.
+skinparam classAttributeIconSize 0
+hide empty members
+
+abstract class EntidadeBase {
+  # id : int
+  + to_dict() : dict  {abstract}
+  + {static} from_dict(dados : dict) : EntidadeBase  {abstract}
+}
+
+abstract class Usuario {
+  - nome : str
+  - email : str
+  - login : str
+  - senha : str
+  - ativo : bool
+  + perfil() : str  {abstract}
+  + verificar_senha(senha : str) : bool
+  + to_dict() : dict
+}
+
+class Organizador {
+  - instituicao : str
+  + perfil() : str
+  + {static} from_dict(dados : dict) : Organizador
+}
+
+class Participante {
+  - cpf : str
+  - telefone : str
+  + perfil() : str
+  + {static} from_dict(dados : dict) : Participante
+}
+
+class Categoria {
+  - nome : str
+  - descricao : str
+  + {static} from_dict(dados : dict) : Categoria
+}
+
+class Local {
+  - nome : str
+  - endereco : str
+  - cidade : str
+  - capacidade : int
+  + {static} from_dict(dados : dict) : Local
+}
+
+class Evento {
+  - titulo : str
+  - descricao : str
+  - data_hora : datetime
+  - organizador_id : int
+  - categoria_id : int
+  - local_id : int
+  + {static} from_dict(dados : dict) : Evento
+}
+
+class LoteIngresso {
+  - nome : str
+  - preco : float
+  - quantidade_total : int
+  - quantidade_disponivel : int
+  - evento_id : int
+  + ha_disponibilidade(qtd : int) : bool
+  + decrementar(qtd : int) : None
+  + incrementar(qtd : int) : None
+  + {static} from_dict(dados : dict) : LoteIngresso
+}
+
+class CupomDesconto {
+  - codigo : str
+  - percentual_desconto : float
+  - ativo : bool
+  - validade : date
+  + esta_valido(data : date) : bool
+  + calcular_desconto(valor : float) : float
+  + {static} from_dict(dados : dict) : CupomDesconto
+}
+
+class Inscricao {
+  - codigo_ingresso : str
+  - data_inscricao : datetime
+  - valor_original : float
+  - valor_final : float
+  - status : str
+  - utilizado : bool
+  - participante_id : int
+  - lote_id : int
+  - cupom_id : int
+  + {static} from_dict(dados : dict) : Inscricao
+}
+
+class Pagamento {
+  - inscricao_id : int
+  - valor : float
+  - forma_pagamento : str
+  - data_pagamento : datetime
+  - status : str
+  + {static} from_dict(dados : dict) : Pagamento
+}
+
+' ===== Heranças =====
+EntidadeBase <|-- Usuario
+EntidadeBase <|-- Categoria
+EntidadeBase <|-- Local
+EntidadeBase <|-- Evento
+EntidadeBase <|-- LoteIngresso
+EntidadeBase <|-- CupomDesconto
+EntidadeBase <|-- Inscricao
+EntidadeBase <|-- Pagamento
+Usuario <|-- Organizador
+Usuario <|-- Participante
+
+' ===== Associações um-para-muitos (chave estrangeira por id) =====
+Organizador  "1" --> "0..*" Evento        : cria
+Categoria    "1" --> "0..*" Evento        : classifica
+Local        "1" --> "0..*" Evento        : sedia
+Evento       "1" *-- "1..*" LoteIngresso  : possui
+Participante "1" --> "0..*" Inscricao     : realiza
+LoteIngresso "1" --> "0..*" Inscricao     : origina
+CupomDesconto "1" --> "0..*" Inscricao    : aplica-se >
+Inscricao    "1" --> "1"    Pagamento     : gera
+
+@enduml
