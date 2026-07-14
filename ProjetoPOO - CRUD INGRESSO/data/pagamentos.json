@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "inscricao_id": 1,
+    "valor": 80.0,
+    "forma_pagamento": "PIX",
+    "data_pagamento": "2026-07-14T18:11:20.463727",
+    "status": "PAGO"
+  }
+]

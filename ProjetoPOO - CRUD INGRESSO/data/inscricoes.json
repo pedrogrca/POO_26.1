@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "codigo_ingresso": "34BAA915",
+    "participante_id": 4,
+    "lote_id": 1,
+    "cupom_id": null,
+    "valor_original": 80.0,
+    "valor_final": 80.0,
+    "data_inscricao": "2026-07-14T18:11:18.189317",
+    "status": "CONFIRMADA",
+    "utilizado": true
+  }
+]

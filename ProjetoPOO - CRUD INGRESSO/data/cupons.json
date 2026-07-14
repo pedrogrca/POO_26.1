@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "codigo": "PROMO10",
+    "percentual_desconto": 10.0,
+    "ativo": true,
+    "validade": "2026-12-31"
+  },
+  {
+    "id": 2,
+    "codigo": "PROMO10",
+    "percentual_desconto": 10.0,
+    "ativo": true,
+    "validade": "2027-12-31"
+  }
+]

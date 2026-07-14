@@ -1,0 +1,120 @@
+@startuml diagrama_casos_de_uso
+' Diagrama de Casos de Uso - GestEventos
+' Renderize em https://www.plantuml.com/plantuml ou na extensao PlantUML do VS Code.
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Organizador" as ORG
+actor "Participante" as PAR
+
+rectangle "GestEventos - Sistema de Gestão de Eventos e Ingressos" {
+
+  ' ---- Autenticação (comum aos dois atores) ----
+  usecase "Entrar no sistema" as UC_LOGIN
+  usecase "Sair do sistema" as UC_LOGOUT
+  usecase "Cadastrar-se" as UC_CADASTRO
+
+  ' ---- CRUD Categoria ----
+  usecase "Inserir categoria" as UC_CAT_INS
+  usecase "Listar categorias" as UC_CAT_LIST
+  usecase "Atualizar categoria" as UC_CAT_UPD
+  usecase "Excluir categoria" as UC_CAT_DEL
+
+  ' ---- CRUD Local ----
+  usecase "Inserir local" as UC_LOC_INS
+  usecase "Listar locais" as UC_LOC_LIST
+  usecase "Atualizar local" as UC_LOC_UPD
+  usecase "Excluir local" as UC_LOC_DEL
+
+  ' ---- CRUD Evento ----
+  usecase "Inserir evento" as UC_EVT_INS
+  usecase "Listar eventos" as UC_EVT_LIST
+  usecase "Atualizar evento" as UC_EVT_UPD
+  usecase "Excluir evento" as UC_EVT_DEL
+
+  ' ---- CRUD Lote de Ingresso ----
+  usecase "Inserir lote de ingresso" as UC_LOT_INS
+  usecase "Listar lotes" as UC_LOT_LIST
+  usecase "Atualizar lote" as UC_LOT_UPD
+  usecase "Excluir lote" as UC_LOT_DEL
+
+  ' ---- CRUD Cupom de Desconto ----
+  usecase "Inserir cupom" as UC_CUP_INS
+  usecase "Listar cupons" as UC_CUP_LIST
+  usecase "Atualizar cupom" as UC_CUP_UPD
+  usecase "Excluir cupom" as UC_CUP_DEL
+
+  ' ---- Associações ----
+  usecase "Vincular evento a categoria/local" as UC_ASSOC_EVT
+  usecase "Vincular lote a evento" as UC_ASSOC_LOT
+
+  ' ---- Pesquisas ----
+  usecase "Pesquisar eventos por título" as UC_BUSCA_EVT
+  usecase "Listar eventos por categoria" as UC_BUSCA_CAT
+  usecase "Visualizar lotes disponíveis" as UC_VER_LOTES
+  usecase "Listar inscrições do evento" as UC_LIST_INSC_EVT
+  usecase "Listar minhas inscrições" as UC_MINHAS_INSC
+
+  ' ---- Regras de Negócio ----
+  usecase "Realizar inscrição\n(comprar ingresso)" as UC_INSCREVER
+  usecase "Aplicar cupom de desconto" as UC_APLICAR_CUPOM
+  usecase "Cancelar inscrição" as UC_CANCELAR
+  usecase "Validar ingresso (check-in)" as UC_VALIDAR
+}
+
+' ===== Relacionamentos: Organizador =====
+ORG --> UC_LOGIN
+ORG --> UC_LOGOUT
+
+ORG --> UC_CAT_INS
+ORG --> UC_CAT_LIST
+ORG --> UC_CAT_UPD
+ORG --> UC_CAT_DEL
+
+ORG --> UC_LOC_INS
+ORG --> UC_LOC_LIST
+ORG --> UC_LOC_UPD
+ORG --> UC_LOC_DEL
+
+ORG --> UC_EVT_INS
+ORG --> UC_EVT_LIST
+ORG --> UC_EVT_UPD
+ORG --> UC_EVT_DEL
+
+ORG --> UC_LOT_INS
+ORG --> UC_LOT_LIST
+ORG --> UC_LOT_UPD
+ORG --> UC_LOT_DEL
+
+ORG --> UC_CUP_INS
+ORG --> UC_CUP_LIST
+ORG --> UC_CUP_UPD
+ORG --> UC_CUP_DEL
+
+ORG --> UC_ASSOC_EVT
+ORG --> UC_ASSOC_LOT
+ORG --> UC_BUSCA_EVT
+ORG --> UC_LIST_INSC_EVT
+ORG --> UC_VALIDAR
+
+' ===== Relacionamentos: Participante =====
+PAR --> UC_CADASTRO
+PAR --> UC_LOGIN
+PAR --> UC_LOGOUT
+
+PAR --> UC_BUSCA_EVT
+PAR --> UC_BUSCA_CAT
+PAR --> UC_VER_LOTES
+PAR --> UC_MINHAS_INSC
+
+PAR --> UC_INSCREVER
+PAR --> UC_CANCELAR
+
+' ===== Dependências entre casos de uso =====
+UC_INSCREVER ..> UC_VER_LOTES : <<include>>
+UC_INSCREVER ..> UC_APLICAR_CUPOM : <<extend>>
+UC_EVT_INS ..> UC_ASSOC_EVT : <<include>>
+UC_LOT_INS ..> UC_ASSOC_LOT : <<include>>
+
+@enduml

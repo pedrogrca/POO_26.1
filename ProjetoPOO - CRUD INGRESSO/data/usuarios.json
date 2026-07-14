@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "perfil": "ORGANIZADOR",
+    "nome": "Ana Souza",
+    "email": "ana@ifrn.edu.br",
+    "login": "ana",
+    "senha": "123",
+    "ativo": true,
+    "instituicao": "IFRN"
+  },
+  {
+    "id": 2,
+    "perfil": "PARTICIPANTE",
+    "nome": "Bruno Lima",
+    "email": "bruno@email.com",
+    "login": "bruno",
+    "senha": "456",
+    "ativo": true,
+    "cpf": "123.456.789-00",
+    "telefone": "(84) 99999-0000"
+  },
+  {
+    "id": 3,
+    "perfil": "ORGANIZADOR",
+    "nome": "Administrador",
+    "email": "admin@gesteventos.com",
+    "login": "admin",
+    "senha": "admin",
+    "ativo": true,
+    "instituicao": "IFRN"
+  },
+  {
+    "id": 4,
+    "perfil": "PARTICIPANTE",
+    "nome": "Maria Silva",
+    "email": "maria@email.com",
+    "login": "maria",
+    "senha": "123",
+    "ativo": true,
+    "cpf": "000.000.000-00",
+    "telefone": "(84) 99999-0000"
+  }
+]
