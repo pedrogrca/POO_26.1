@@ -1,8 +1,0 @@
-# Python
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-
-# Dados gerados em tempo de execução
-data/
