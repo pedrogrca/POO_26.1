@@ -3,14 +3,15 @@
 Projeto da disciplina de **Programação Orientada a Objetos** (2º Bimestre — 2026.1),
 Tecnologia em Análise e Desenvolvimento de Sistemas — IFRN/DIATINF.
 
-> **Escopo desta entrega: Tarefa 1 (40 pontos).**
 > Tema livre (não é comércio eletrônico): gestão de eventos, lotes de ingressos,
 > inscrições/vendas e cupons de desconto. Projeto **em dupla** (7 entidades de negócio
 > + controle de usuários), **persistência em arquivos JSON**, feito em **Python**.
 
+**Autores:** Pedro Henrique Graça de Assis Silva · Gustavo Samuel de Souza Silva
+
 ---
 
-## Entregáveis da Tarefa 1
+## Entregáveis — Tarefa 1 (40 pontos)
 
 | Item | Pontos | Arquivo(s) |
 |------|:------:|------------|
@@ -20,6 +21,17 @@ Tecnologia em Análise e Desenvolvimento de Sistemas — IFRN/DIATINF.
 | Diagrama de Classes da Persistência | (10) | [docs/04_diagrama_classes_persistencia.puml](docs/04_diagrama_classes_persistencia.puml) · [PNG](docs/img/diagrama_classes_persistencia.png) |
 | Implementação Modelo + Persistência | 20 | pastas [`model/`](model) e [`persistence/`](persistence) |
 | Código de teste (salvar/ler em arquivo) | (20) | [tests/test_persistencia.py](tests/test_persistencia.py) · [exemplo_persistencia.py](exemplo_persistencia.py) |
+
+## Entregáveis — Tarefa 2 (60 pontos)
+
+| Item | Pontos | Arquivo(s) |
+|------|:------:|------------|
+| Diagrama de Classes da Interface com o Usuário | 5 | [docs/06_diagrama_classes_interface.puml](docs/06_diagrama_classes_interface.puml) · [PNG](docs/img/diagrama_classes_interface.png) |
+| Diagrama de Classes de Operações (View/Service) | 5 | [docs/05_diagrama_classes_servico.puml](docs/05_diagrama_classes_servico.puml) · [PNG](docs/img/diagrama_classes_servico.png) |
+| Aplicativo com todas as operações | 50 | pastas [`service/`](service) e [`view/`](view) + [main.py](main.py) |
+
+> Documento consolidado (visão + todos os diagramas, sem código):
+> **GestEventos_Visao_e_Diagramas.pdf**.
 
 ## Arquitetura em camadas
 
@@ -40,15 +52,30 @@ ProjetoPOO/
 ├── persistence/      # Camada de PERSISTÊNCIA (repositórios JSON)
 │   ├── repositorio_json.py   # CRUD genérico em arquivo JSON
 │   └── *_repositorio.py      # um repositório por entidade + consultas
+├── service/          # Camada de SERVIÇO (operações e regras de negócio)
+│   ├── servicos.py           # contêiner que injeta repositórios nos serviços
+│   ├── erros.py              # ErroDeNegocio (exceção de regra de negócio)
+│   ├── usuario_service.py    # autenticação e cadastro (controle de login)
+│   ├── inscricao_service.py  # regra central: comprar, cancelar, check-in
+│   └── *_service.py          # CRUD, associação e pesquisa por entidade
+├── view/             # Camada de INTERFACE (view/template)
+│   ├── tela_base.py          # utilitários de entrada/saída (superclasse)
+│   ├── tela_login.py         # login, cadastro e roteamento por perfil
+│   ├── menu_organizador.py   # menu do organizador
+│   ├── menu_participante.py  # menu do participante
+│   └── *_view.py             # telas de CRUD e de inscrição
+├── main.py           # ponto de entrada: compõe as camadas e inicia a interface
 ├── tests/
-│   └── test_persistencia.py  # testes automatizados de salvar/ler
+│   ├── test_persistencia.py  # testes de salvar/ler (modelo + persistência)
+│   └── test_servico.py       # testes das regras de negócio (serviço)
 ├── exemplo_persistencia.py   # demonstração narrada (salva e lê objetos)
 ├── data/                     # arquivos .json gerados em tempo de execução
 └── docs/                     # documento de visão e diagramas
 ```
 
-As camadas **view/service** (operações) e **template** (interface com o usuário)
-serão implementadas na **Tarefa 2**.
+O fluxo de dependências vai de **view → service → persistence → model**: a interface
+não conhece os repositórios (recebe apenas o contêiner `Servicos`) e nenhuma regra de
+negócio é implementada na camada `view`.
 
 ## Entidades e relacionamentos (associação um-para-muitos)
 
@@ -70,8 +97,8 @@ biblioteca padrão. Execute a partir da **raiz do projeto**:
 # Menu interativo no terminal para a demonstração ao vivo
 python main.py
 
-# Testes automatizados (salvar e ler objetos do modelo em arquivo)
-python -m unittest tests.test_persistencia -v
+# Testes automatizados (persistência + regras de negócio da camada de serviço)
+python -m unittest discover -s tests -v
 
 # Demonstração narrada (gera os arquivos JSON em data/)
 python exemplo_persistencia.py

@@ -2,14 +2,7 @@
   {
     "id": 1,
     "nome": "Auditório Central",
-    "endereco": "Av. Sen. Salgado Filho, 1559",
-    "cidade": "Natal",
-    "capacidade": 300
-  },
-  {
-    "id": 2,
-    "nome": "Auditório Central",
-    "endereco": "Av. Senador Salgado Filho, 1559",
+    "endereco": "Av. Salgado Filho",
     "cidade": "Natal",
     "capacidade": 300
   }

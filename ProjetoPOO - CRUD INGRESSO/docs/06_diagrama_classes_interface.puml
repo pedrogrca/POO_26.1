@@ -1,0 +1,128 @@
+@startuml diagrama_classes_interface
+' Diagrama de Classes da Interface com o Usuário (view/template) - GestEventos - Tarefa 2
+' Renderize em https://www.plantuml.com/plantuml ou na extensao PlantUML do VS Code.
+skinparam classAttributeIconSize 0
+skinparam nodesep 22
+skinparam ranksep 55
+title Camada de Interface com o Usuário (Telas e Menus)
+
+abstract class TelaBase {
+  + titulo(texto : str)
+  + subtitulo(texto : str)
+  + mensagem(texto : str)
+  + erro(texto : str)
+  + pausar()
+  + ler(rotulo : str, obrigatorio : bool) : str
+  + ler_int(rotulo : str, permitir_vazio : bool, padrao : int) : int
+  + ler_float(rotulo : str, permitir_vazio : bool, padrao : float) : float
+  + ler_data_hora(rotulo : str, padrao : datetime) : datetime
+  + ler_data(rotulo : str, padrao : date) : date
+  + confirmar(rotulo : str) : bool
+}
+
+class TelaLogin {
+  + executar()
+  - _entrar()
+  - _cadastrar()
+  - _carregar_demo()
+}
+
+class MenuOrganizador {
+  + executar()
+}
+
+class MenuParticipante {
+  + executar()
+  - _pesquisar_eventos()
+  - _eventos_por_categoria()
+}
+
+class CategoriaView {
+  + menu()
+  - _listar()
+  - _pesquisar()
+  - _inserir()
+  - _editar()
+  - _excluir()
+}
+
+class LocalView {
+  + menu()
+  - _listar()
+  - _pesquisar()
+  - _inserir()
+  - _editar()
+  - _excluir()
+}
+
+class EventoView {
+  + menu()
+  - _pesquisar()
+  - _por_categoria()
+  - _inserir()
+  - _editar()
+  - _excluir()
+}
+
+class LoteIngressoView {
+  + menu()
+  - _listar_por_evento()
+  - _inserir()
+  - _editar()
+  - _excluir()
+}
+
+class CupomView {
+  + menu()
+  - _listar()
+  - _buscar()
+  - _inserir()
+  - _editar()
+  - _excluir()
+}
+
+class InscricaoView {
+  + comprar(participante : Participante)
+  + minhas_inscricoes(participante : Participante)
+  + checkin()
+  + inscricoes_do_evento()
+}
+
+class Servicos <<facade>>
+
+' ===== Herança: todas as telas reutilizam os utilitários de TelaBase =====
+TelaBase <|-- TelaLogin
+TelaBase <|-- MenuOrganizador
+TelaBase <|-- MenuParticipante
+TelaBase <|-- CategoriaView
+TelaBase <|-- LocalView
+TelaBase <|-- EventoView
+TelaBase <|-- LoteIngressoView
+TelaBase <|-- CupomView
+TelaBase <|-- InscricaoView
+
+' ===== Navegação entre telas =====
+TelaLogin ..> MenuOrganizador : abre
+TelaLogin ..> MenuParticipante : abre
+
+' ===== Composição dos menus com as telas de operação =====
+MenuOrganizador *-- CategoriaView
+MenuOrganizador *-- LocalView
+MenuOrganizador *-- EventoView
+MenuOrganizador *-- LoteIngressoView
+MenuOrganizador *-- CupomView
+MenuOrganizador *-- InscricaoView
+MenuParticipante *-- InscricaoView
+
+' ===== Dependência: as telas usam a camada de serviço =====
+TelaLogin ..> Servicos
+MenuOrganizador ..> Servicos
+MenuParticipante ..> Servicos
+CategoriaView ..> Servicos
+LocalView ..> Servicos
+EventoView ..> Servicos
+LoteIngressoView ..> Servicos
+CupomView ..> Servicos
+InscricaoView ..> Servicos
+
+@enduml

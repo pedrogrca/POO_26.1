@@ -2,11 +2,6 @@
   {
     "id": 1,
     "nome": "Tecnologia",
-    "descricao": "Eventos de TI e inovação"
-  },
-  {
-    "id": 2,
-    "nome": "Tecnologia",
-    "descricao": "Eventos de tecnologia e inovação"
+    "descricao": "Eventos de tecnologia"
   }
 ]

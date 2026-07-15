@@ -1,0 +1,115 @@
+@startuml diagrama_classes_servico
+' Diagrama de Classes de Operações (View/Service) - GestEventos - Tarefa 2
+' Renderize em https://www.plantuml.com/plantuml ou na extensao PlantUML do VS Code.
+skinparam classAttributeIconSize 0
+skinparam nodesep 25
+skinparam ranksep 55
+title Camada de Serviço (Operações e Regras de Negócio)
+
+class Servicos {
+  + usuario : UsuarioService
+  + categoria : CategoriaService
+  + local : LocalService
+  + evento : EventoService
+  + lote : LoteIngressoService
+  + cupom : CupomDescontoService
+  + inscricao : InscricaoService
+  + carregar_demo() : bool
+}
+
+class UsuarioService {
+  + autenticar(login : str, senha : str) : Usuario
+  + cadastrar_participante(nome : str, email : str, login : str, senha : str, cpf : str, telefone : str) : Participante
+  + cadastrar_organizador(nome : str, email : str, login : str, senha : str, instituicao : str) : Organizador
+  + buscar_por_id(usuario_id : int) : Usuario
+  + buscar_por_login(login : str) : Usuario
+}
+
+class CategoriaService {
+  + inserir(nome : str, descricao : str) : Categoria
+  + atualizar(categoria_id : int, nome : str, descricao : str) : Categoria
+  + excluir(categoria_id : int) : None
+  + listar() : list<Categoria>
+  + pesquisar(parte : str) : list<Categoria>
+  + buscar_por_id(categoria_id : int) : Categoria
+}
+
+class LocalService {
+  + inserir(nome : str, endereco : str, cidade : str, capacidade : int) : Local
+  + atualizar(local_id : int, nome : str, endereco : str, cidade : str, capacidade : int) : Local
+  + excluir(local_id : int) : None
+  + listar() : list<Local>
+  + pesquisar(parte : str) : list<Local>
+  + buscar_por_id(local_id : int) : Local
+}
+
+class EventoService {
+  + inserir(titulo : str, descricao : str, data_hora : datetime, organizador_id : int, categoria_id : int, local_id : int) : Evento
+  + atualizar(evento_id : int, titulo : str, descricao : str, data_hora : datetime, categoria_id : int, local_id : int) : Evento
+  + excluir(evento_id : int) : None
+  + listar() : list<Evento>
+  + pesquisar(parte : str) : list<Evento>
+  + listar_por_categoria(categoria_id : int) : list<Evento>
+  + listar_por_organizador(organizador_id : int) : list<Evento>
+  + buscar_por_id(evento_id : int) : Evento
+}
+
+class LoteIngressoService {
+  + inserir(nome : str, preco : float, quantidade_total : int, evento_id : int) : LoteIngresso
+  + atualizar(lote_id : int, nome : str, preco : float, quantidade_total : int) : LoteIngresso
+  + excluir(lote_id : int) : None
+  + listar_por_evento(evento_id : int) : list<LoteIngresso>
+  + buscar_por_id(lote_id : int) : LoteIngresso
+}
+
+class CupomDescontoService {
+  + inserir(codigo : str, percentual : float, validade : date) : CupomDesconto
+  + atualizar(cupom_id : int, codigo : str, percentual : float, ativo : bool, validade : date) : CupomDesconto
+  + excluir(cupom_id : int) : None
+  + listar() : list<CupomDesconto>
+  + buscar_por_codigo(codigo : str) : CupomDesconto
+  + buscar_por_id(cupom_id : int) : CupomDesconto
+}
+
+class InscricaoService {
+  + realizar_inscricao(participante_id : int, lote_id : int, codigo_cupom : str, forma_pagamento : str) : (Inscricao, Pagamento)
+  + cancelar_inscricao(inscricao_id : int, participante_id : int) : Inscricao
+  + validar_ingresso(codigo_ingresso : str) : Inscricao
+  + listar_por_participante(participante_id : int) : list<Inscricao>
+  + listar_por_evento(evento_id : int) : list<Inscricao>
+  + buscar_pagamento(inscricao_id : int) : Pagamento
+}
+
+class ErroDeNegocio <<exception>> {
+  ' Lançada pelos serviços quando uma
+  ' regra de negócio é violada.
+}
+
+note as N1
+  Todos os serviços recebem por injeção os
+  repositórios da camada de persistência
+  (subclasses de RepositorioJson) e os utilizam
+  para executar o CRUD e as consultas.
+  Ao violar uma regra, lançam ErroDeNegocio.
+end note
+
+' ===== Composição: o contêiner cria e mantém os serviços =====
+Servicos *-- UsuarioService
+Servicos *-- CategoriaService
+Servicos *-- LocalService
+Servicos *-- EventoService
+Servicos *-- LoteIngressoService
+Servicos *-- CupomDescontoService
+Servicos *-- InscricaoService
+
+' ===== Layout: empilha os serviços em coluna (arestas ocultas) =====
+UsuarioService -[hidden]down- CategoriaService
+CategoriaService -[hidden]down- LocalService
+LocalService -[hidden]down- EventoService
+EventoService -[hidden]down- LoteIngressoService
+LoteIngressoService -[hidden]down- CupomDescontoService
+CupomDescontoService -[hidden]down- InscricaoService
+
+N1 .. ErroDeNegocio
+
+@enduml
